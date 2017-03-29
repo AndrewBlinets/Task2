@@ -2,35 +2,44 @@ package by.andreiblinets.entity;
 
 public class CreditCard {
 
-    private int id;
-    private int numberAccount;
-    private int idUser;
+    private long id;
+    private String nameCheck;
+    private double balance;
+    private long idOwner;
 
     public CreditCard() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getNumberAccount() {
-        return numberAccount;
+    public String getNameCheck() {
+        return nameCheck;
     }
 
-    public void setNumberAccount(int numberAccount) {
-        this.numberAccount = numberAccount;
+    public void setNameCheck(String nameCheck) {
+        this.nameCheck = nameCheck;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public double getBalance() {
+        return balance;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public long getIdOwner() {
+        return idOwner;
+    }
+
+    public void setIdOwner(long idOwner) {
+        this.idOwner = idOwner;
     }
 
     @Override
@@ -41,16 +50,21 @@ public class CreditCard {
         CreditCard that = (CreditCard) o;
 
         if (id != that.id) return false;
-        if (numberAccount != that.numberAccount) return false;
-        return idUser == that.idUser;
+        if (Double.compare(that.balance, balance) != 0) return false;
+        if (idOwner != that.idOwner) return false;
+        return nameCheck != null ? nameCheck.equals(that.nameCheck) : that.nameCheck == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + numberAccount;
-        result = 31 * result + idUser;
+        int result;
+        long temp;
+        result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (nameCheck != null ? nameCheck.hashCode() : 0);
+        temp = Double.doubleToLongBits(balance);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (int) (idOwner ^ (idOwner >>> 32));
         return result;
     }
 
@@ -58,8 +72,9 @@ public class CreditCard {
     public String toString() {
         return "CreditCard{" +
                 "id=" + id +
-                ", numberAccount=" + numberAccount +
-                ", idUser=" + idUser +
+                ", nameCheck='" + nameCheck + '\'' +
+                ", balance=" + balance +
+                ", idOwner=" + idOwner +
                 '}';
     }
 }
